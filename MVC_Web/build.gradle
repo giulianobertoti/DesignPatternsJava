@@ -1,0 +1,32 @@
+repositories {
+    mavenCentral()
+}
+
+apply plugin: 'java'
+//apply plugin: 'jetty'
+apply plugin: 'application'
+
+mainClassName = 'hello.MainServer'
+applicationName = 'app'
+
+defaultTasks = ['clean', 'jar']
+
+dependencies {
+	compile 'com.sparkjava:spark-core:2.3'
+	compile 'com.google.code.gson:gson:1.7.2'
+	compile 'org.json:json:20141113'
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'hello.MainServer'
+    }
+	from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } } {
+        // remove all signature files
+        exclude 'META-INF/*.SF'
+        exclude 'META-INF/*.DSA'
+        exclude 'META-INF/*.RSA'
+    }
+}
+task stage(dependsOn: ['clean', 'installApp'])

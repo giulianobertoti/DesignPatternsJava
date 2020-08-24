@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Busca por Placa</title>
+	
+    
+	<script src="js/jquery.js"></script>
+	
+
+	<link href="css/bootstrap.min.css" rel=stylesheet>
+	
+	
+	<script>
+		$(document).ready(function(){
+			
+
+			$("#busca").click(function() {
+
+				var placa = $("#placa").val();
+				
+					
+				$("#dadosCarro").empty();
+					
+				var url = "/carro/"+placa;
+				
+					
+
+				$.getJSON(url, function(data) {
+						
+						var itens = [];
+						
+						
+						
+						itens.push("<tr> <td>"+ data.placa +"</td><td>"+ data.espc.modelo + "</td><td>"+ data.espc.marca + "</td><td>"+ data.espc.cor + "</td></tr>");
+							
+						
+									
+						$("#dadosCarro").append(itens);
+						
+				});
+
+			});
+
+		});
+
+	</script>
+
+   
+  </head>
+
+
+  <body>
+		
+
+  		<div id="painelBusca">
+            
+		
+		
+        <input id="placa" class="form-control col-md-offset-5" type="text" placeholder="Default input">
+		
+		<button id="busca" class="btn btn-success col-md-offset-5">Buscar</button>
+		
+		<table class="table table-bordered"> 
+			<caption>Carros</caption>
+				<thead>
+					<tr> 
+						<th>Placa</th>
+						<th>Modelo</th> 
+						<th>Marca</th> 
+						<th>Cor</th> 
+					</tr> 
+				</thead> 
+				
+				<tbody id="dadosCarro"> 
+					
+				</tbody> 
+		</table>
+
+		
+  </body>
+  
+</html>
